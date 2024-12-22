@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fix the Outboard Engine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, p {
+      margin: 10px 0;
+    }
+    .game-container {
+      width: 80%;
+      margin: auto;
+      max-width: 1000px;
+    }
+    .game-step {
+      display: none;
+      margin: 20px 0;
+      padding: 20px;
+      border: 2px solid white;
+      border-radius: 8px;
+    }
+    .game-step.active {
+      display: block;
+    }
+    .game-image {
+      max-width: 100%;
+      margin: 20px 0;
+    }
+    .cable {
+      display: inline-block;
+      width: 50px;
+      height: 200px;
+      margin: 10px;
+      background-color: gray;
+      border: 2px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .cable.connected {
+      background-color: green;
+    }
+    .button {
+      padding: 10px 20px;
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .button:hover {
+      background-color: #16a085;
+    }
+    #animation {
+      width: 300px;
+      height: 300px;
+      margin: 20px auto;
+      background-color: transparent;
+      position: relative;
+    }
+    .piston {
+      width: 50px;
+      height: 50px;
+      background-color: gray;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: movePiston 1s linear infinite;
+    }
+    @keyframes movePiston {
+      0% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -50px); }
+      100% { transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Fix the Outboard Engine</h1>
+    <p>Repair the engine step by step to escape!</p>
+    
+    <!-- Step 1: Connect Cables -->
+    <div id="step1" class="game-step active">
+      <h2>Step 1: Connect the Cables</h2>
+      <p>Click the cables in the correct order: Red → Blue → Green.</p>
+      <div id="cables">
+        <div class="cable" id="red" onclick="connectCable('red')"></div>
+        <div class="cable" id="blue" onclick="connectCable('blue')"></div>
+        <div class="cable" id="green" onclick="connectCable('green')"></div>
+      </div>
+    </div>
+    
+    <!-- Step 2: Replace the Piston -->
+    <div id="step2" class="game-step">
+      <h2>Step 2: Replace the Piston</h2>
+      <p>Drag the piston into the engine to replace it.</p>
+      <div id="animation">
+        <div class="piston"></div>
+      </div>
+      <button class="button" onclick="replacePiston()">Replace Piston</button>
+    </div>
+    
+    <!-- Step 3: Refill Fuel -->
+    <div id="step3" class="game-step">
+      <h2>Step 3: Refill Fuel</h2>
+      <p>Click the fuel tank to fill it.</p>
+      <img src="https://via.placeholder.com/300x200" alt="Fuel Tank" class="game-image" onclick="refillFuel()">
+    </div>
+    
+    <!-- Success Message -->
+    <div id="success" class="game-step">
+      <h2>Success!</h2>
+      <p>You repaired the engine and escaped from Jason. Well done!</p>
+    </div>
+  </div>
+  
+  <script>
+    let currentStep = 1;
+    let cableOrder = ['red', 'blue', 'green'];
+    let connectedCables = [];
+    
+    function connectCable(color) {
+      if (cableOrder[connectedCables.length] === color) {
+        connectedCables.push(color);
+        document.getElementById(color).classList.add('connected');
+        if (connectedCables.length === cableOrder.length) {
+          alert("Cables connected successfully!");
+          nextStep();
+        }
+      } else {
+        alert("Wrong cable! Try again.");
+      }
+    }
+    
+    function replacePiston() {
+      alert("Piston replaced!");
+      nextStep();
+    }
+    
+    function refillFuel() {
+      alert("Fuel tank refilled!");
+      nextStep();
+    }
+    
+    function nextStep() {
+      document.getElementById(step${currentStep}).classList.remove('active');
+      currentStep++;
+      if (document.getElementById(step${currentStep})) {
+        document.getElementById(step${currentStep}).classList.add('active');
+      } else {
+        document.getElementById("success").classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
